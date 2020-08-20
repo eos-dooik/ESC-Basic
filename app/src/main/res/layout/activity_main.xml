@@ -43,7 +43,6 @@
         android:id="@+id/main_tv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="010-6371-8230"
         android:textColor="#000000"
         android:textSize="40dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -129,7 +128,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="7"
-        app:layout_constraintBottom_toTopOf="@+id/main_ibtn_star"
+        app:layout_constraintBottom_toTopOf="@+id/main_tv_star"
         app:layout_constraintEnd_toStartOf="@+id/main_tv_8"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -160,7 +159,7 @@
         app:layout_constraintTop_toBottomOf="@+id/main_tv_6" />
 
     <TextView
-        android:id="@+id/main_ibtn_star"
+        android:id="@+id/main_tv_star"
         style="@style/DialButtonStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -180,7 +179,7 @@
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toStartOf="@+id/main_tv_sharp"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/main_ibtn_star"
+        app:layout_constraintStart_toEndOf="@+id/main_tv_star"
         app:layout_constraintTop_toBottomOf="@+id/main_tv_8" />
 
     <TextView
@@ -200,7 +199,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.9015048" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -239,7 +238,7 @@
             app:srcCompat="@drawable/ic_message" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/main_ibtn_call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/circle_background"
