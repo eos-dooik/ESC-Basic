@@ -103,9 +103,8 @@ public class MainActivity extends AppCompatActivity {
     private void setOnClickDial(View view, final String input) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String formatPhoneNum = PhoneNumberUtils.formatNumber(phoneNum.getText() + input, Locale.getDefault().getCountry());
-                phoneNum.setText(formatPhoneNum);
+            public void onClick(View v) {
+                phoneNum.setText(changeToDial(phoneNum.getText() + input));
             }
         });
     }
@@ -125,21 +124,26 @@ public class MainActivity extends AppCompatActivity {
         String simplePhoneNum = phoneNum.replace("-", "");
         if (phoneNum.contains("#") || phoneNum.contains("*")) {
             phoneNum = simplePhoneNum;
-            return phoneNum;
         }
-        if (simplePhoneNum.length() >= 4 && simplePhoneNum.length() <= 11) {
+        else if (simplePhoneNum.length() >= 4 && simplePhoneNum.length() <= 11) {
             if (simplePhoneNum.length() <= 7) {
-                phoneNum = phoneNum.substring(0, 3) + "-" + phoneNum.substring(3);
+                if (phoneNum.indexOf("-") == 3) {
+                } else {
+                    phoneNum = simplePhoneNum.substring(0, 3) + "-" + simplePhoneNum.substring(3);
+                }
             } else {
-                phoneNum = phoneNum.substring(0, 3) + "-" + phoneNum.substring(3, 7) + "-" + phoneNum.substring(7);
+                if (phoneNum.indexOf("-") == 8) {
+                } else {
+                    phoneNum = simplePhoneNum.substring(0, 3) + "-" + simplePhoneNum.substring(3, 7) + "-" + simplePhoneNum.substring(7);
+                }
             }
             return phoneNum;
         }
+        return phoneNum;
         // 12글자 이상이면 - 전부 제거
         // 특수문자 있으면 - 전부 제거
 
         // 4글자 이상일때 3번째 숫자 다음에 - (010-3)
         // 8글자 이상일때 3번째 글자 다음이랑 7번째 글짜 다음에 - (010-6371-8)
-
     }
 }
