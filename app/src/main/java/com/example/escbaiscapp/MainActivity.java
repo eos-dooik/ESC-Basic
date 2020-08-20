@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     private String changeToDial(String phoneNum) {
         // 전화번호 기준 010-6371-8230
         String simplePhoneNum = phoneNum.replace("-", "");
-        if (phoneNum.contains("#") || phoneNum.contains("*")) {
+        if (phoneNum.contains("#") || phoneNum.contains("*") || simplePhoneNum.length() > 11) {
             phoneNum = simplePhoneNum;
         }
         else if (simplePhoneNum.length() >= 4 && simplePhoneNum.length() <= 11) {
