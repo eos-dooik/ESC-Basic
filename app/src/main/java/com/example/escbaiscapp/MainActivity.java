@@ -11,18 +11,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.LocaleList;
-import android.os.Message;
-import android.provider.ContactsContract;
-import android.telephony.PhoneNumberUtils;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.IllegalFormatCodePointException;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton message;
     private ImageButton call;
     private ImageButton backspace;
+
+    private TextView name;
 
 
     @Override
@@ -77,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void SetUpUI() {
+        name = findViewById(R.id.main_tv_name);
+
         addContact = findViewById(R.id.main_ibtn_add);
         contact = findViewById(R.id.main_ibtn_contact);
         phoneNum = findViewById(R.id.main_tv_phone);
@@ -95,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent addIntent = new Intent(MainActivity.this, AddEditActivity.class);
+                addIntent.putExtra("phone_num", phoneNum.getText().toString());
+                addIntent.putExtra("add_edit", "add");
                 startActivity(addIntent);
             }
         });
@@ -102,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Intent contactIntent = new Intent(MainActivity.this, ContactActivity.class);
-               startActivity(contactIntent);
+                Intent contactIntent = new Intent(MainActivity.this, ContactActivity.class);
+                startActivity(contactIntent);
             }
         });
 
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent messageIntent = new Intent(MainActivity.this, MessageActivity.class);
-                messageIntent.putExtra("phone_num",phoneNum.getText().toString());
+                messageIntent.putExtra("phone_num", phoneNum.getText().toString());
                 startActivity(messageIntent);
             }
         });
@@ -144,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                         backspace.setVisibility(View.GONE);
                     }
                 }
+                findPhone();
             }
         });
 
@@ -154,11 +156,12 @@ public class MainActivity extends AppCompatActivity {
 
                 message.setVisibility(View.GONE);
                 backspace.setVisibility(View.GONE);
-
+                findPhone();
                 return true;
             }
         });
     }
+
     private void setOnClickDial(View view, final String input) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,8 +170,28 @@ public class MainActivity extends AppCompatActivity {
 
                 message.setVisibility(View.VISIBLE);
                 backspace.setVisibility(View.VISIBLE);
+
+                findPhone();
             }
         });
+    }
+
+    private void findPhone() {
+        String find = phoneNum.getText().toString().replaceAll("-", "");
+        StringBuffer Name = new StringBuffer();
+        int num = 0;
+        for (int i = 0; i < DummyData.contacts.size(); i++) {
+            if (DummyData.contacts.get(i).getPhone().replaceAll("-", "").contains(find)) {
+                Name.append(DummyData.contacts.get(i).getName());
+                Name.append(" ");
+                num++;
+            }
+        }
+        if (num == 0) {
+            name.setText("");
+        } else {
+            name.setText(Name);
+        }
     }
 
     private int getResourceID(final String resName, final String resType, final Context ctx) {
